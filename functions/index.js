@@ -10,9 +10,14 @@ exports.webhook = onRequest(async (req, res) => {
     for (const event of events) {
       switch (event.type) {
         case "message":
+          // if (event.message.type === "text") {
+          //   const result = await palm.text(event.message.text);
+          //   const msg = result[0].candidates[0].output;
+          //   await reply(event.replyToken, [{ type: "text", text: msg }]);
+          // }
           if (event.message.type === "text") {
-            const result = await palm.text(event.message.text);
-            const msg = result[0].candidates[0].output;
+            const result = await palm.chat(event.message.text);
+            const msg = result[0].candidates[0].content;
             await reply(event.replyToken, [{ type: "text", text: msg }]);
           }
           break;

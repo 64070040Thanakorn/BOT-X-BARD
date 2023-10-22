@@ -16,6 +16,11 @@ exports.webhook = onRequest(async (req, res) => {
           //   await reply(event.replyToken, [{ type: "text", text: msg }]);
           // }
           if (event.message.type === "text") {
+            if (event.message.text === "เลือกเพลง"){
+              await reply(event.replyToken, [{ type: "text", text: "เลือกเพลง" }]);
+                // const test = ยิง api (event.message.text)
+                // await reply(event.replyToken, [{ type: "text", text: test }]);
+            }
             const result = await palm.chat(event.message.text);
             const msg = result[0].candidates[0].content;
             await reply(event.replyToken, [{ type: "text", text: msg }]);

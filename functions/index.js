@@ -12,10 +12,14 @@ const requestRecommendAPI = async (song) => {
 
     if (response.status === 200) {
       const responseData = response.data.response;
-      const recommendations = responseData.recommendations.join(", ");
-      const songInfo = responseData.song;
-
-      return `Recommended songs for "${songInfo}": ${recommendations}`; // Return the response as a string
+      if (responseData) {
+        const recommendations = responseData.recommendations.join(", ");
+        const songInfo = responseData.song;
+        return `Recommended songs for "${songInfo}": ${recommendations}`; // Return the response as a string
+      }
+      else {
+        return "I can't find any song that matches your song."
+      }
     } else {
       return "Sorry, there was an issue with the API request.";
     }
@@ -32,9 +36,7 @@ const processImage = async (imageUrl) => {
     const response = await axios.get(apiUrl);
 
     if (response.status === 200) {
-      return (
-        "Image processing complete. Result: " + response.data.food_prediction
-      ); // Replace with how you want to handle the response.
+      return "Image processing complete. Result: " + response.data.food_prediction; // Replace with how you want to handle the response.
     } else {
       return "Sorry, there was an issue with image processing.";
     }
@@ -70,12 +72,9 @@ exports.webhook = onRequest(async (req, res) => {
             if (imageUrl) {
               imageResponse = await processImage(imageUrl);
             } else {
-              imageResponse =
-                "You've sent an image. We don't process images at the moment.";
+              imageResponse = "You've sent an image. We don't process images at the moment.";
             }
-            await reply(event.replyToken, [
-              { type: "text", text: imageResponse },
-            ]);
+            await reply(event.replyToken, [{ type: "text", text: imageResponse }]);
           }
           break;
       }

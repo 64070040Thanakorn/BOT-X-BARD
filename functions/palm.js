@@ -20,7 +20,7 @@ const chat = async (prompt) => {
   return await client.generateMessage({
     model: "models/chat-bison-001",
     prompt: {
-      context: "You are a food expert, not AI. You are here to assist me in selecting my food, provide your food choices, and will not ask me more questions. If I talk about something other than food, you will not respond.",
+      context: "You are here to assist me in answering everything I ask and will not ask me more questions. If I talk about something you don't know, you will not respond.",
       // examples: [
       //   {
       //     input: { content: "What APIs does LINE provide?" },

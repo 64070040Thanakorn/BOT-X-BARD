@@ -55,7 +55,7 @@ exports.webhook = onRequest(async (req, res) => {
           if (event.message.type === "text") {
             // Handle text messages
             const message = event.message.text.split(" : ");
-            if (message[0].toLowerCase() === "recommend song") {
+            if (message[0].toLowerCase().includes("rec") && message[0].toLowerCase().includes("song")) {
               const response = await requestRecommendAPI(message[1]);
               await reply(event.replyToken, [{ type: "text", text: response }]);
             } else {
